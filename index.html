@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Be My Valentine? 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ffe6ee 0%, #fff0f5 50%, #ffe4ec 100%);
+        }
+
+        /* Rose Background Pattern */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 105, 180, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 20, 147, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 182, 193, 0.3) 0%, transparent 70%);
+        }
+
+        /* Falling Rose Petals */
+        .petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .petal {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Question Card */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px 50px;
+            box-shadow: 
+                0 25px 50px rgba(255, 105, 180, 0.3),
+                0 0 0 1px rgba(255, 182, 193, 0.5);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Decorative Hearts */
+        .hearts-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .hearts-decoration span {
+            font-size: 2.5rem;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .hearts-decoration span:nth-child(1) { animation-delay: 0s; }
+        .hearts-decoration span:nth-child(2) { animation-delay: 0.1s; font-size: 3rem; }
+        .hearts-decoration span:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Couple Photo */
+        .couple-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 20px auto;
+            display: block;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Title */
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ff6b95, #ff1493, #ff6b95);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Subtitle */
+        .subtitle {
+            color: #ff69b4;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Buttons Container */
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            min-height: 80px;
+            position: relative;
+        }
+
+        /* Yes Button */
+        .btn-yes {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #ff6b95, #ff1493);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.5);
+            background: linear-gradient(135deg, #ff1493, #ff6b95);
+        }
+
+        /* No Button */
+        .btn-no {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            background: #aaa;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: absolute;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Hint Text */
+        .hint {
+            color: #ffb6c1;
+            font-size: 0.9rem;
+            margin-top: 25px;
+            font-style: italic;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            display: none;
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        .success-screen.active {
+            display: block;
+        }
+
+        .question-screen.hidden {
+            display: none;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ff1493;
+            margin-bottom: 20px;
+        }
+
+        /* Success Photo */
+        .success-photo-container {
+            position: relative;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        .success-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ff1493;
+            box-shadow: 
+                0 0 30px rgba(255, 20, 147, 0.5),
+                0 0 60px rgba(255, 105, 180, 0.3);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 
+                    0 0 30px rgba(255, 20, 147, 0.5),
+                    0 0 60px rgba(255, 105, 180, 0.3);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 
+                    0 0 50px rgba(255, 20, 147, 0.7),
+                    0 0 80px rgba(255, 105, 180, 0.5);
+            }
+        }
+
+        .heart-overlay {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        .heart-overlay:nth-child(2) { top: -15px; left: 50%; transform: translateX(-50%); }
+        .heart-overlay:nth-child(3) { bottom: -15px; left: 50%; transform: translateX(-50%); animation-delay: 0.2s; }
+        .heart-overlay:nth-child(4) { left: -20px; top: 50%; transform: translateY(-50%); animation-delay: 0.4s; }
+        .heart-overlay:nth-child(5) { right: -20px; top: 50%; transform: translateY(-50%); animation-delay: 0.6s; }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.3); }
+        }
+
+        .love-message {
+            font-size: 1.8rem;
+            color: #ff69b4;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .sub-message {
+            font-size: 1.1rem;
+            color: #ffb6c1;
+        }
+
+        .roses-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .roses-decoration span {
+            font-size: 2.5rem;
+            animation: wiggle 0.5s ease-in-out infinite;
+        }
+
+        .roses-decoration span:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .roses-decoration span:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+        }
+
+        .forever-text {
+            color: #ff1493;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            margin-top: 20px;
+        }
+
+        /* Floating Hearts Animation (after Yes) */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 4s ease-in infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) scale(1);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 25px;
+                margin: 15px;
+            }
+
+            .title {
+                font-size: 2.2rem;
+            }
+
+            .couple-photo {
+                width: 140px;
+                height: 140px;
+            }
+
+            .btn-yes, .btn-no {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+
+            .success-title {
+                font-size: 2.5rem;
+            }
+
+            .success-photo {
+                width: 200px;
+                height: 200px;
+            }
+
+            .heart-overlay {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="background"></div>
+
+    <!-- Falling Rose Petals -->
+    <div class="petals-container" id="petals"></div>
+
+    <!-- Floating Hearts (shown after Yes) -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="card">
+            <!-- Question Screen -->
+            <div class="question-screen" id="questionScreen">
+                <div class="hearts-decoration">
+                    <span>💕</span>
+                    <span>❤️</span>
+                    <span>💕</span>
+                </div>
+
+                <!-- 
+                    ⬇️⬇️⬇️ REPLACE THE URL BELOW WITH YOUR PHOTO ⬇️⬇️⬇️ 
+                    You can upload your photo to imgur.com or any image hosting site,
+                    then paste the direct image URL here
+                -->
+                <img src="image/Snapchat-515305037.jpg" alt="Our Photo" class="couple-photo" />
+
+                <h1 class="title">Will You Be My Valentine, Boo Boo?</h1>
+                <p class="subtitle">You make my heart skip a beat! 💓</p>
+
+                <div class="buttons-container" id="buttonsContainer">
+                    <button class="btn-yes" onclick="sayYes()">Yes! 💖</button>
+                    <button class="btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No 😢</button>
+                </div>
+
+                <p class="hint">(Hint: There's only one right answer! 😉)</p>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="success-screen" id="successScreen">
+                <div class="hearts-decoration">
+                    <span>💕</span>
+                    <span>❤️</span>
+                    <span>💖</span>
+                    <span>💗</span>
+                    <span>💓</span>
+                </div>
+
+                <h1 class="success-title">Yay! 🎉</h1>
+
+                <!-- 
+                    ⬇️⬇️⬇️ REPLACE THE URL BELOW WITH YOUR COUPLE PHOTO ⬇️⬇️⬇️ 
+                    This photo will show after she clicks "Yes"!
+                    Upload your photo to imgur.com and paste the direct URL here
+                -->
+                <div class="success-photo-container">
+                    <img src="image/IMG20250317180757.jpg" alt="Us Together" class="success-photo" />
+                    <span class="heart-overlay">💕</span>
+                    <span class="heart-overlay">❤️</span>
+                    <span class="heart-overlay">💖</span>
+                    <span class="heart-overlay">💗</span>
+                </div>
+
+                <p class="love-message">I Love You! 💕</p>
+                <p class="sub-message">You've made me the happiest person in the world!</p>
+
+                <div class="roses-decoration">
+                    <span>🌹</span>
+                    <span>💝</span>
+                    <span>🌹</span>
+                </div>
+
+                <p class="forever-text">Forever & Always ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create falling rose petals
+        function createPetals() {
+            const petalsContainer = document.getElementById('petals');
+            const petals = ['🌹', '🌸', '💮', '🏵️', '❀'];
+            
+            for (let i = 0; i < 20; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (8 + Math.random() * 7) + 's';
+                petal.style.animationDelay = Math.random() * 10 + 's';
+                petal.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+                petalsContainer.appendChild(petal);
+            }
+        }
+
+        // Move the No button when hovered or clicked
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const container = document.getElementById('buttonsContainer');
+            const containerRect = container.getBoundingClientRect();
+            
+            const maxX = containerRect.width - 120;
+            const maxY = 150;
+            
+            const randomX = (Math.random() - 0.5) * maxX;
+            const randomY = (Math.random() - 0.5) * maxY;
+            
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        // When Yes is clicked
+        function sayYes() {
+            const questionScreen = document.getElementById('questionScreen');
+            const successScreen = document.getElementById('successScreen');
+            
+            questionScreen.classList.add('hidden');
+            successScreen.classList.add('active');
+            
+            createFloatingHearts();
+        }
+
+        // Create floating hearts animation
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['💕', '❤️', '💖', '💗', '💓', '💘', '💝', '🌹'];
+            
+            function addHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+                heart.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+                container.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+            
+            // Add hearts continuously
+            setInterval(addHeart, 300);
+            
+            // Initial burst of hearts
+            for (let i = 0; i < 15; i++) {
+                setTimeout(addHeart, i * 100);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createPetals();
+        });
+
+        // Also handle touch events for mobile
+        document.getElementById('noBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+    </script>
+</body>
+</html>
